@@ -1,4 +1,4 @@
-
+// register.js
 document.querySelector('.signupBtn').addEventListener('click', async () => {
     const name = document.getElementById('signupName').value;
     const password = document.getElementById('signupPassword').value;
