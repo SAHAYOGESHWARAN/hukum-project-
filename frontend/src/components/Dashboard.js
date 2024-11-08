@@ -1,22 +1,20 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../authContext';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-    const { auth, setAuth } = useContext(AuthContext);
-    const history = useHistory();
+  const navigate = useNavigate();
 
-    const handleLogout = () => {
-        setAuth(null);
-        history.push('/login');
-    };
+  const handleLogout = () => {
+    // Logout logic here
+    navigate('/login'); // Using useNavigate instead of useHistory
+  };
 
-    return (
-        <div>
-            <h1>Welcome, {auth ? auth.name : 'Guest'}!</h1>
-            <button onClick={handleLogout}>Logout</button>
-        </div>
-    );
+  return (
+    <div>
+      <h1>Welcome to the Dashboard</h1>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  );
 };
 
 export default Dashboard;
