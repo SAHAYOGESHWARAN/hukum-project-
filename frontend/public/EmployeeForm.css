@@ -1,0 +1,225 @@
+/* General Page and Form Styling */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Full-Screen Container */
+#app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Employee Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 200%;
+    max-width: 1000px; /* Increased max-width for a larger form */
+    padding: 50px; /* Increased padding for a more spacious feel */
+    background-color: #f6c7c7;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    animation: slideIn 1s ease-out forwards; /* Added 'forwards' to maintain final state */
+}
+
+/* Slide-in animation for the form */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Input Fields and Select Styling */
+input, select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin: 10px 0; /* Increased margin for better spacing */
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+/* Focus state for input and select fields */
+input:focus, select:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+    background-color: #fff;
+}
+
+/* Input Hover State */
+input:hover, select:hover {
+    transform: scale(1.02);
+}
+
+/* Submit Button Styling */
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect for buttons */
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Active state for buttons */
+button:active {
+    transform: scale(0.98);
+    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* File Upload Field Styling */
+input[type="file"] {
+    padding: 10px;
+    background-color: #e9f7ec;
+    border: 1px solid #4caf50;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+input[type="file"]:hover {
+    background-color: #d0f0d0;
+    transform: scale(1.05);
+}
+
+/* Progress Bar Styling */
+.progress {
+    width: 100%;
+    height: 8px;
+    background-color: #f0f0f0;
+    margin: 15px 0;
+    border-radius: 3px;
+    display: none; /* Initially hidden, can be toggled in JS */
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    width: 0%;
+    transition: width 1s ease-out;
+    border-radius: 3px;
+}
+
+/* Spin animation for the progress bar */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Form List Styling */
+form ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+form li {
+    margin: 10px 0;
+}
+
+/* Button within Form List */
+form li button {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+form li button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Reset the form with smooth animation */
+form.resetting {
+    animation: resetForm 0.5s ease-out forwards; /* Added 'forwards' to maintain final state */
+}
+
+@keyframes resetForm {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+/* Subtle Hover Effect for Input Fields */
+input:focus, select:focus {
+    transform: scale(1.05);
+}
+
+/* Smooth Background Color Change on Submit */
+form.success {
+    background-color: #e8f7e5;
+    animation: backgroundColorChange 0.5s ease forwards; /* Added 'forwards' to maintain final state */
+}
+
+/* Animation for background color change */
+@keyframes backgroundColorChange {
+    0% {
+        background-color: #ffffff;
+    }
+    100% {
+        background-color: #e8f7e5;
+    }
+}
+
+/* Progress Bar Visibility */
+.progress {
+    display: block; /* Can be toggled in JS */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 480px) {
+    form {
+        width: 100%;
+        padding: 20px; /* Adjusted padding for smaller screens */
+    }
+
+    input, select {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
