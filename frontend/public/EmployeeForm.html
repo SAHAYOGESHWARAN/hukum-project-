@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee </title>
+    <title>Employee Form</title>
     <link rel="stylesheet" href="EmployeeForm.css">
-   
 </head>
 <body>
 
 <div id="app"></div>
 
 <!-- Employee Form -->
-<form id="employeeForm" enctype="multipart/form-data">
+<form id="employeeForm" enctype="multipart/form-data" aria-labelledby="formTitle">
+    <h2 id="formTitle">Employee Registration</h2>
     <ul>
-        <li><input type="text" name="name" placeholder="Name" required /></li>
-        <li><input type="email" name="email" placeholder="Email" required /></li>
-        <li><input type="tel" name="mobile" placeholder="Mobile" required /></li>
-        <li><input type="text" name="designation" placeholder="Designation" required /></li>
+        <li><input type="text" name="name" placeholder="Name" required aria-required="true" /></li>
+        <li><input type="email" name="email" placeholder="Email" required aria-required="true" /></li>
+        <li><input type="tel" name="mobile" placeholder="Mobile" required aria-required="true" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number." /></li>
+        <li><input type="text" name="designation" placeholder="Designation" required aria-required="true" /></li>
 
         <!-- Gender Dropdown -->
         <li>
-            <select name="gender" required>
+            <select name="gender" required aria-required="true">
                 <option value="" disabled selected>Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -30,7 +30,7 @@
 
         <!-- Course Dropdown -->
         <li>
-            <select name="course" required>
+            <select name="course" required aria-required="true">
                 <option value="" disabled selected>Course</option>
                 <option value="MSc">MSc</option>
                 <option value="BSc">BSc</option>
@@ -38,7 +38,7 @@
             </select>
         </li>
 
-        <li><input type="file" name="imgUpload" accept="image/jpeg, image/png, image/jpg" required /></li>
+        <li><input type="file" name="imgUpload" accept="image/jpeg, image/png" required aria-required="true" /></li>
         
         <div class="progress" style="display:none;">
             <div class="progress-bar"></div>
@@ -66,6 +66,7 @@
         }
 
         progress.style.display = 'block';  // Show progress bar
+        progressBar.style.width = '0%';    // Reset progress bar
 
         try {
             const response = await fetch('/api/employees', {
@@ -85,11 +86,16 @@
             console.error('Error submitting form:', error);
             alert('An error occurred. Please try again later.');
         }
-    });
 
-    // Progress bar simulation
-    form.addEventListener('input', () => {
-        progressBar.style.width = `${Math.min(100, progressBar.clientWidth + 20)}%`;
+        // Simulate progress bar filling
+        let progressInterval = setInterval(() => {
+            const currentWidth = parseInt(progressBar.style.width);
+            if (currentWidth < 100) {
+                progressBar.style.width = `${Math.min(100, currentWidth + 10)}%`;
+            } else {
+                clearInterval(progressInterval);
+            }
+        }, 100);
     });
 </script>
 

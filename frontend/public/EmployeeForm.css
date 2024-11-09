@@ -25,9 +25,9 @@ form {
     display: flex;
     flex-direction: column;
     width: 200%;
-    max-width: 1000px; /* Increased max-width for a larger form */
-    padding: 50px; /* Increased padding for a more spacious feel */
-    background-color: #f6c7c7;
+    max-width: 1000px; /* Adjusted max-width for a balanced form size */
+    padding: 50px; /* Increased padding for a spacious feel */
+    background-color: #a7aef3; /* Softer background color */
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     animation: slideIn 1s ease-out forwards; /* Added 'forwards' to maintain final state */
@@ -36,11 +36,11 @@ form {
 /* Slide-in animation for the form */
 @keyframes slideIn {
     from {
-        transform: translateX(-100%);
+        transform: translateY(-30px);
         opacity: 0;
     }
     to {
-        transform: translateX(0);
+        transform: translateY(0);
         opacity: 1;
     }
 }
@@ -66,7 +66,7 @@ input:focus, select:focus {
 
 /* Input Hover State */
 input:hover, select:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
 
 /* Submit Button Styling */
@@ -127,16 +127,6 @@ input[type="file"]:hover {
     border-radius: 3px;
 }
 
-/* Spin animation for the progress bar */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 /* Form List Styling */
 form ul {
     list-style-type: none;
@@ -146,23 +136,6 @@ form ul {
 
 form li {
     margin: 10px 0;
-}
-
-/* Button within Form List */
-form li button {
-    padding: 12px 24px;
-    font-size: 16px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-form li button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Reset the form with smooth animation */
@@ -182,7 +155,7 @@ form.resetting {
 
 /* Subtle Hover Effect for Input Fields */
 input:focus, select:focus {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 /* Smooth Background Color Change on Submit */
@@ -199,11 +172,6 @@ form.success {
     100% {
         background-color: #e8f7e5;
     }
-}
-
-/* Progress Bar Visibility */
-.progress {
-    display: block; /* Can be toggled in JS */
 }
 
 /* Responsive Design for Smaller Screens */
