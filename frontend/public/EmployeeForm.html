@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Form</title>
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .progress {
+            display: none;
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: #4caf50;
+        }
+    </style>
+</head>
+<body>
+
+<form id="employeeForm" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Name" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="tel" name="mobile" placeholder="Mobile" required />
+    <input type="text" name="designation" placeholder="Designation" required />
+    <input type="text" name="gender" placeholder="Gender" required />
+    <input type="text" name="course" placeholder="Course" required />
+    <input type="file" name="imgUpload" accept="image/jpeg, image/png, image/jpg" required />
+    <div class="progress">
+        <div class="progress-bar"></div>
+    </div>
+    <button type="submit">Save Employee</button>
+</form>
+
+<script>
+    const form = document.getElementById('employeeForm');
+    const progress = document.querySelector('.progress');
+    const progressBar = document.querySelector('.progress-bar');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const fileInput = formData.get('imgUpload');
+
+        // Check file size (limit to 2MB)
+        if (fileInput && fileInput.size > 2 * 1024 * 1024) {
+            alert("File size must be under 2MB.");
+            return;
+        }
+
+        progress.style.display = 'block';  // Show progress bar
+
+        try {
+            const response = await fetch('/api/employees', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                alert('Employee added successfully!');
+                form.reset();  // Clear the form
+                progress.style.display = 'none';  // Hide progress bar
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || 'Failed to add employee');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert('An error occurred. Please try again later.');
+        }
+    });
+
+    // Progress bar simulation
+    form.addEventListener('input', () => {
+        progressBar.style.width = `${Math.min(100, progressBar.clientWidth + 20)}%`;
+    });
+</script>
+
+</body>
+</html>
