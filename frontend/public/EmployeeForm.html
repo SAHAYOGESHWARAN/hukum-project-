@@ -3,72 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Form</title>
+    <title>Employee </title>
     <style>
-       
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f9;
+        /* 1. Smooth Form Appearance Animation */
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
+
         form {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
+            animation: slideIn 1s ease-out;
         }
-        input, button {
-            display: block;
-            width: 100%;
-            margin-bottom: 15px;
-            padding: 10px;
-            font-size: 1rem;
+
+        /* 2. Input Focus Animation */
+        input:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+            transition: all 0.3s ease;
         }
+
+        /* 3. Button Hover Animation */
         button {
-            background-color: #28a745;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        /* 4. Progress Bar Animation */
+        .progress-bar {
+            transition: width 1s ease-out;
+        }
+
+        @keyframes loadingBar {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .progress {
+            animation: loadingBar 2s infinite alternate;
+        }
+
+        /* 5. Form Fields Transition Animation */
+        input {
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            transform: scale(1.05);
+        }
+
+        /* 6. Background Color Change on Form Submit */
+        form.success {
+            background-color: #e8f7e5;
+            animation: backgroundColorChange 0.5s ease;
+        }
+
+        @keyframes backgroundColorChange {
+            0% {
+                background-color: #ffffff;
+            }
+            100% {
+                background-color: #e8f7e5;
+            }
+        }
+
+        /* 7. Subtle Hover Animation for Form Inputs */
+        input:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+
+        /* 8. Shadow Animation for the Form */
+        form:focus-within {
+            box-shadow: 0 0 15px rgba(0, 128, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* 9. Button Press Animation */
+        button:active {
+            transform: scale(0.98);
+            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 10. Smooth Form Reset Animation */
+        form.resetting {
+            animation: resetForm 0.5s ease-out;
+        }
+
+        @keyframes resetForm {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+
+        /* 11. Loading Spinner for Progress Bar */
+        .progress-bar:after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        form ul {
+            list-style-type: none; /* Remove default list style */
+            padding: 0;
+        }
+
+        form li {
+            margin: 10px 0; /* Add space between the fields */
+        }
+
+        form li input, form li select {
+            width: 100%; /* Make inputs and selects full width */
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        form li button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 1.1rem;
         }
-        button:hover {
-            background-color: #218838;
-        }
-        .progress {
-            display: none;
-            height: 10px;
-            background: #ddd;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%;
-            width: 0;
-            background: #4caf50;
+
+        form li button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
 
+<div id="app"></div>
+
+<!-- Employee Form -->
 <form id="employeeForm" enctype="multipart/form-data">
-    <input type="text" name="name" placeholder="Name" required />
-    <input type="email" name="email" placeholder="Email" required />
-    <input type="tel" name="mobile" placeholder="Mobile" required />
-    <input type="text" name="designation" placeholder="Designation" required />
-    <input type="text" name="gender" placeholder="Gender" required />
-    <input type="text" name="course" placeholder="Course" required />
-    <input type="file" name="imgUpload" accept="image/jpeg, image/png, image/jpg" required />
-    <div class="progress">
-        <div class="progress-bar"></div>
-    </div>
-    <button type="submit">Save Employee</button>
+    <ul>
+        <li><input type="text" name="name" placeholder="Name" required /></li>
+        <li><input type="email" name="email" placeholder="Email" required /></li>
+        <li><input type="tel" name="mobile" placeholder="Mobile" required /></li>
+        <li><input type="text" name="designation" placeholder="Designation" required /></li>
+
+        <!-- Gender Dropdown -->
+        <li>
+            <select name="gender" required>
+                <option value="" disabled selected>Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </li>
+
+        <!-- Course Dropdown -->
+        <li>
+            <select name="course" required>
+                <option value="" disabled selected>Course</option>
+                <option value="MSc">MSc</option>
+                <option value="BSc">BSc</option>
+                <option value="MCA">MCA</option>
+            </select>
+        </li>
+
+        <li><input type="file" name="imgUpload" accept="image/jpeg, image/png, image/jpg" required /></li>
+        
+        <div class="progress" style="display:none;">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <li><button type="submit">Save Employee</button></li>
+    </ul>
 </form>
 
 <script>

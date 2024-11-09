@@ -1,7 +1,6 @@
-
 document.querySelector('.loginBtn').addEventListener('click', async () => {
-    const name = document.getElementById('name').value;
-    const password = document.getElementById('password').value;
+    const name = document.getElementById('name').value.trim();
+    const password = document.getElementById('password').value.trim();
 
     // Validate inputs
     if (!name || !password) {
@@ -17,9 +16,16 @@ document.querySelector('.loginBtn').addEventListener('click', async () => {
             body: JSON.stringify({ name, password })
         });
 
+        if (!response.ok) {
+            // Check if response is an error (404, 500, etc.)
+            const errorData = await response.json();
+            alert(errorData.message || "Login failed, please try again.");
+            return;
+        }
+
         const data = await response.json();
 
-        if (response.ok) {
+        if (data.message === 'Login successful!') {
             alert("Login successful!");
             window.location.href = "/dashboard.html"; // Redirect to the dashboard page
         } else {

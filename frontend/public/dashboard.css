@@ -131,3 +131,85 @@ img {
     margin-top: 10px;
     border-radius: 5px;
 }
+/* Styling for the dashboard container */
+.dashboard-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Style for the form in list format */
+#employeeForm ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#employeeForm li {
+    margin: 10px 0;
+}
+
+/* Input fields styling */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="file"],
+select {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input:focus, select:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Gender radio buttons styling */
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+label {
+    margin-left: 5px;
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.98);
+    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the employee list */
+#employeeList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#employeeList li {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+/* Styling for the buttons on the dashboard */
+button {
+    margin: 10px;
+}

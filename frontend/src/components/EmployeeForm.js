@@ -10,6 +10,8 @@ const EmployeeForm = ({ existingEmployee, onSave }) => {
         course: existingEmployee?.course || '',
         imgUpload: null
     });
+    const [progressVisible, setProgressVisible] = useState(false);
+    const [progressWidth, setProgressWidth] = useState(0);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,6 +30,18 @@ const EmployeeForm = ({ existingEmployee, onSave }) => {
             formPayload.append(key, formData[key]);
         });
 
+        // Simulate progress
+        setProgressVisible(true);
+        let width = 0;
+        const interval = setInterval(() => {
+            if (width < 100) {
+                width += 20;
+                setProgressWidth(width);
+            } else {
+                clearInterval(interval);
+            }
+        }, 500);
+
         try {
             const response = await fetch('/api/employees', {
                 method: 'POST',
@@ -44,19 +58,106 @@ const EmployeeForm = ({ existingEmployee, onSave }) => {
         } catch (error) {
             console.error('Error adding employee:', error);
             alert('An error occurred. Please try again.');
+        } finally {
+            setProgressVisible(false);
+            setProgressWidth(0);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
-            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
-            <input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} placeholder="Mobile" required />
-            <input type="text" name="designation" value={formData.designation} onChange={handleChange} placeholder="Designation" required />
-            <input type="text" name="gender" value={formData.gender} onChange={handleChange} placeholder="Gender" required />
-            <input type="text" name="course" value={formData.course} onChange={handleChange} placeholder="Course" required />
-            <input type="file" name="imgUpload" onChange={handleFileChange} accept="image/jpeg, image/png, image/jpg" />
-            <button type="submit">Save Employee</button>
+        <form onSubmit={handleSubmit} className={`employee-form ${progressVisible ? 'loading' : ''}`}>
+            <ul>
+                <li>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Name"
+                        required
+                    />
+                </li>
+                <li>
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                        required
+                    />
+                </li>
+                <li>
+                    <input
+                        type="tel"
+                        name="mobile"
+                        value={formData.mobile}
+                        onChange={handleChange}
+                        placeholder="Mobile"
+                        required
+                    />
+                </li>
+                <li>
+                    <input
+                        type="text"
+                        name="designation"
+                        value={formData.designation}
+                        onChange={handleChange}
+                        placeholder="Designation"
+                        required
+                    />
+                </li>
+                <li>
+                    <div>
+                        <label>Gender:</label>
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="Male"
+                            checked={formData.gender === 'Male'}
+                            onChange={handleChange}
+                        />
+                        Male
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="Female"
+                            checked={formData.gender === 'Female'}
+                            onChange={handleChange}
+                        />
+                        Female
+                    </div>
+                </li>
+                <li>
+                    <select
+                        name="course"
+                        value={formData.course}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Select Course</option>
+                        <option value="MSC">MSC</option>
+                        <option value="MCS">MCS</option>
+                        <option value="BSC">BSC</option>
+                    </select>
+                </li>
+                <li>
+                    <input
+                        type="file"
+                        name="imgUpload"
+                        onChange={handleFileChange}
+                        accept="image/jpeg, image/png, image/jpg"
+                    />
+                </li>
+                {progressVisible && (
+                    <div className="progress">
+                        <div className="progress-bar" style={{ width: `${progressWidth}%` }}></div>
+                    </div>
+                )}
+                <li>
+                    <button type="submit">Save Employee</button>
+                </li>
+            </ul>
         </form>
     );
 };

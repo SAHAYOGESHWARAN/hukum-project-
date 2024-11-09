@@ -16,6 +16,14 @@ document.querySelector('.signupBtn').addEventListener('click', async () => {
             body: JSON.stringify({ name, password })
         });
 
+        // Check for server response
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Server error:", errorData);
+            alert(errorData.message || "Registration failed. Please try again.");
+            return;
+        }
+
         // Attempt to parse the JSON response
         let data;
         try {
@@ -29,9 +37,6 @@ document.querySelector('.signupBtn').addEventListener('click', async () => {
         if (response.ok) {
             alert("Registration successful! Please login.");
             window.location.href = "/index.html"; // Redirect to the login page
-        } else {
-            console.error("Server error:", data);
-            alert(data.message || "Registration failed. Please try again.");
         }
     } catch (error) {
         console.error("Error during registration:", error);
