@@ -8,6 +8,9 @@
 </head>
 <body>
 
+<!-- Logout Button -->
+<button id="logoutButton" onclick="logout()">Logout</button>
+
 <div id="app"></div>
 
 <!-- Employee Form -->
@@ -49,6 +52,15 @@
 </form>
 
 <script>
+    // Logout function
+    function logout() {
+        // This is a placeholder logic. You can clear authentication data (cookies, sessionStorage, etc.)
+        alert('You have logged out successfully.');
+        
+        // Redirect the user to the login page (or any page you want)
+        window.location.href = '/login';  // Replace with the actual login URL of your app
+    }
+
     const form = document.getElementById('employeeForm');
     const progress = document.querySelector('.progress');
     const progressBar = document.querySelector('.progress-bar');
