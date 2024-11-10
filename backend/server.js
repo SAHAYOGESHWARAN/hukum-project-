@@ -1,25 +1,26 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
-const path = require('path');
-const mongoose = require('mongoose');
 const multer = require('multer');
+const path = require('path');
 const fs = require('fs');
 
 // Load environment variables
 dotenv.config();
 
+// Create the Express app
+const app = express();
+const PORT = process.env.PORT || 5000;
+
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/employeeDB', {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/employeeDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch((err) => console.error('Failed to connect to MongoDB', err));
-
-// Create the Express app
-const app = express();
 
 // Middleware
 app.use(cors());
@@ -53,7 +54,6 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));  // Unique file name
   },
 });
-
 const upload = multer({ storage: storage });
 
 // Example in-memory user data (for demonstration purposes)
@@ -71,8 +71,6 @@ app.post('/api/register', (req, res) => {
 
   // Simulate saving to a database (In a real-world scenario, use MongoDB or other DB)
   users.push({ name, password });
-
-  // Respond with success message
   res.status(200).json({ message: 'Registration successful!' });
 });
 
@@ -86,16 +84,14 @@ app.post('/api/login', (req, res) => {
 
   // Find the user with matching credentials
   const user = users.find(u => u.name === name && u.password === password);
-
   if (!user) {
     return res.status(401).json({ message: 'Invalid credentials. Please try again.' });
   }
 
-  // Respond with success message
   res.status(200).json({ message: 'Login successful!' });
 });
 
-// Endpoint to handle form submission for employees
+// Endpoint to handle employee form submission
 app.post('/api/employees', upload.single('imgUpload'), async (req, res) => {
   try {
     const { name, email, mobile, designation, gender, course } = req.body;
@@ -112,7 +108,6 @@ app.post('/api/employees', upload.single('imgUpload'), async (req, res) => {
       imgUpload,
     });
 
-    // Save employee to database
     await newEmployee.save();
     res.status(201).json({ message: 'Employee added successfully!' });
   } catch (error) {
@@ -121,8 +116,17 @@ app.post('/api/employees', upload.single('imgUpload'), async (req, res) => {
   }
 });
 
+// Fetch all employees
+app.get('/api/employees', async (req, res) => {
+  try {
+    const employees = await Employee.find();
+    res.json(employees);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch employees', error });
+  }
+});
+
 // Start the server
-const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

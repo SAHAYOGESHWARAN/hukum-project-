@@ -22,28 +22,6 @@ document.getElementById('employeeForm').addEventListener('submit', async (e) => 
     }
 });
 
-// Fetch and display employees
-async function fetchEmployeeList() {
-    const response = await fetch('http://localhost:5000/api/employees');
-    const employees = await response.json();
-    const employeeListElement = document.getElementById('app');
-    employeeListElement.innerHTML = '';
-
-    employees.forEach(employee => {
-        const employeeCard = document.createElement('div');
-        employeeCard.classList.add('employee-card');
-        employeeCard.innerHTML = `
-            <p><strong>Name:</strong> ${employee.name}</p>
-            <p><strong>Email:</strong> ${employee.email}</p>
-            <p><strong>Mobile:</strong> ${employee.mobile}</p>
-            <p><strong>Designation:</strong> ${employee.designation}</p>
-            <p><strong>Gender:</strong> ${employee.gender}</p>
-            <p><strong>Course:</strong> ${employee.course}</p>
-            <img src="http://localhost:5000/${employee.imgUpload}" alt="Employee Image" width="100">
-        `;
-        employeeListElement.appendChild(employeeCard);
-    });
-}
 
 // Initial fetch
 fetchEmployeeList();
