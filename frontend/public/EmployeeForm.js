@@ -22,8 +22,8 @@ async function fetchEmployeeList() {
             employeeListElement.appendChild(li);
         });
     } catch (error) {
-        console.error('Error fetching employees:', error);
-        alert('Could not load employees. Please try again later.');
+        // console.error('Error fetching employees:', error);
+        // alert('Could not load employees. Please try again later.');
     }
 }
 

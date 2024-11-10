@@ -1,13 +1,14 @@
+
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
 
-// Load environment variables
+// Initialize dotenv for environment variables
 dotenv.config();
 
 // Create the Express app
@@ -26,7 +27,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/employeeDB'
 app.use(cors());
 app.use(express.json()); // Built-in JSON parser
 app.use(bodyParser.json()); // For handling JSON bodies
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve uploads folder
 
 // Define Schema for Employee data
 const employeeSchema = new mongoose.Schema({
@@ -36,7 +37,7 @@ const employeeSchema = new mongoose.Schema({
     designation: String,
     gender: String,
     course: String,
-    imgUpload: String, // Store the file path
+    imgUpload: String, // Store file path for image
 });
 
 const Employee = mongoose.model('Employee', employeeSchema);
@@ -51,47 +52,13 @@ const storage = multer.diskStorage({
         cb(null, uploadPath);
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
+        cb(null, Date.now() + path.extname(file.originalname)); // Generate unique filename
     },
 });
+
 const upload = multer({ storage: storage });
 
-// Example in-memory user data (for demonstration purposes)
-let users = [
-    { name: 'JohnDoe', password: 'password123' }, // Example user for login
-];
-
-// POST route for user registration
-app.post('/api/register', (req, res) => {
-    const { name, password } = req.body;
-
-    if (!name || !password) {
-        return res.status(400).json({ message: 'Please provide both name and password.' });
-    }
-
-    // Simulate saving to a database (In a real-world scenario, use MongoDB or other DB)
-    users.push({ name, password });
-    res.status(200).json({ message: 'Registration successful!' });
-});
-
-// POST route for user login
-app.post('/api/login', (req, res) => {
-    const { name, password } = req.body;
-
-    if (!name || !password) {
-        return res.status(400).json({ message: 'Please provide both name and password.' });
-    }
-
-    // Find the user with matching credentials
-    const user = users.find(u => u.name === name && u.password === password);
-    if (!user) {
-        return res.status(401).json({ message: 'Invalid credentials. Please try again.' });
-    }
-
-    res.status(200).json({ message: 'Login successful!' });
-});
-
-// Endpoint to handle employee form submission
+// POST route to add an employee
 app.post('/api/employees', upload.single('imgUpload'), async (req, res) => {
     try {
         const { name, email, mobile, designation, gender, course } = req.body;
@@ -120,7 +87,7 @@ app.post('/api/employees', upload.single('imgUpload'), async (req, res) => {
     }
 });
 
-// Fetch all employees
+// GET route to fetch all employees
 app.get('/api/employees', async (req, res) => {
     try {
         const employees = await Employee.find();
