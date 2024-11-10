@@ -50,66 +50,7 @@
         <li><button type="submit">Save Employee</button></li>
     </ul>
 </form>
-
-<script>
-    // Logout function
-    function logout() {
-        // This is a placeholder logic. You can clear authentication data (cookies, sessionStorage, etc.)
-        alert('You have logged out successfully.');
-        
-        // Redirect the user to the login page (or any page you want)
-        window.location.href = '/login';  // Replace with the actual login URL of your app
-    }
-
-    const form = document.getElementById('employeeForm');
-    const progress = document.querySelector('.progress');
-    const progressBar = document.querySelector('.progress-bar');
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(form);
-        const fileInput = formData.get('imgUpload');
-
-        // Check file size (limit to 2MB)
-        if (fileInput && fileInput.size > 2 * 1024 * 1024) {
-            alert("File size must be under 2MB.");
-            return;
-        }
-
-        progress.style.display = 'block';  // Show progress bar
-        progressBar.style.width = '0%';    // Reset progress bar
-
-        try {
-            const response = await fetch('/api/employees', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (response.ok) {
-                alert('Employee added successfully!');
-                form.reset();  // Clear the form
-                progress.style.display = 'none';  // Hide progress bar
-            } else {
-                const errorData = await response.json();
-                alert(errorData.message || 'Failed to add employee');
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            alert('An error occurred. Please try again later.');
-        }
-
-        // Simulate progress bar filling
-        let progressInterval = setInterval(() => {
-            const currentWidth = parseInt(progressBar.style.width);
-            if (currentWidth < 100) {
-                progressBar.style.width = `${Math.min(100, currentWidth + 10)}%`;
-            } else {
-                clearInterval(progressInterval);
-            }
-        }, 100);
-    });
-</script>
+<script src="EmployeeForm.js"></script>
 
 </body>
 </html>

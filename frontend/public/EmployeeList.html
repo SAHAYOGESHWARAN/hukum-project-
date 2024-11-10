@@ -47,53 +47,13 @@
 <body>
 
     <h2>Employee List</h2>
-    <ul id="employeeList">
-        <!-- Example of a single employee card -->
-        <li>
-            <p><strong>Name:</strong> John Doe</p>
-            <p><strong>Email:</strong> johndoe@example.com</p>
-            <p><strong>Mobile:</strong> 123-456-7890</p>
-            <p><strong>Designation:</strong> Software Engineer</p>
-            <p><strong>Gender:</strong> Male</p>
-            <p><strong>Course:</strong> Computer Science</p>
-            <img src="path_to_image" alt="Employee" width="100" />
-            <button onclick="editEmployee('employeeId')">Edit</button>
-        </li>
-        <!-- More employees will be dynamically inserted here -->
-    </ul>
+    <ul id="employeeList"></ul>
 
     <script>
-        // Example function to simulate the edit action
         function editEmployee(employeeId) {
             alert('Editing employee with ID: ' + employeeId);
             // Implement the logic to redirect or load the employee data for editing
-        }
-
-        // Simulate the fetching of employee data
-        window.addEventListener('load', function() {
-            // Simulating fetched employee data
-            const employees = [
-                {
-                    _id: '1',
-                    name: 'John Doe',
-                    email: 'johndoe@example.com',
-                    mobile: '123-456-7890',
-                    designation: 'Software Engineer',
-                    gender: 'Male',
-                    course: 'Computer Science',
-                    imgUpload: 'path_to_image1.jpg'
-                },
-                {
-                    _id: '2',
-                    name: 'Jane Smith',
-                    email: 'janesmith@example.com',
-                    mobile: '987-654-3210',
-                    designation: 'Product Manager',
-                    gender: 'Female',
-                    course: 'Business Administration',
-                    imgUpload: 'path_to_image2.jpg'
-                }
-            ];
+        
 
             const employeeListElement = document.getElementById('employeeList');
             employees.forEach(employee => {
@@ -105,12 +65,12 @@
                     <p><strong>Designation:</strong> ${employee.designation}</p>
                     <p><strong>Gender:</strong> ${employee.gender}</p>
                     <p><strong>Course:</strong> ${employee.course}</p>
-                    <img src="${employee.imgUpload}" alt="Employee" width="100" />
+                    <img src="${employee.imgUpload}" alt="Employee Image" width="100" />
                     <button onclick="editEmployee('${employee._id}')">Edit</button>
                 `;
                 employeeListElement.appendChild(li);
             });
-        });
+        };
     </script>
 
 </body>
