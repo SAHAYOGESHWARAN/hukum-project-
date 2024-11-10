@@ -4,91 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee List</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            padding: 20px;
-        }
-        h2 {
-            color: #333;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            background-color: #fff;
-            padding: 15px;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        p {
-            margin: 5px 0;
-        }
-        img {
-            margin: 10px 0;
-            border-radius: 5px;
-            width: 100px;
-        }
-        button {
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="El.css">
 </head>
 <body>
-
     <h2>Employee List</h2>
-    <ul id="employeeList"></ul>
-
-    <script>
-        async function fetchEmployees() {
-            try {
-                const response = await fetch('/api/employees');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch employees');
-                }
-
-                const employees = await response.json();
-                const employeeListElement = document.getElementById('employeeList');
-
-                employees.forEach(employee => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <p><strong>Name:</strong> ${employee.name}</p>
-                        <p><strong>Email:</strong> ${employee.email}</p>
-                        <p><strong>Mobile:</strong> ${employee.mobile}</p>
-                        <p><strong>Designation:</strong> ${employee.designation}</p>
-                        <p><strong>Gender:</strong> ${employee.gender}</p>
-                        <p><strong>Course:</strong> ${employee.course}</p>
-                        <img src="${employee.imgUpload}" alt="Employee Image" />
-                        <button onclick="editEmployee('${employee._id}')">Edit</button>
-                    `;
-                    employeeListElement.appendChild(li);
-                });
-            } catch (error) {
-                console.error(error);
-                alert('Could not load employees. Please try again later.');
-            }
-        }
-
-        function editEmployee(employeeId) {
-            alert('Editing employee with ID: ' + employeeId);
-            // Implement redirect or load employee data for editing here
-        }
-
-        // Load employees when the page loads
-        document.addEventListener('DOMContentLoaded', fetchEmployees);
-    </script>
-
+    <div id="loading" class="loading">Loading employees...</div>
+    <ul id="employeeList" class="employee-list"></ul>
+    <script src="EmployeeList.js"></script>
 </body>
 </html>
