@@ -1,4 +1,9 @@
+document.addEventListener('DOMContentLoaded', fetchEmployees);
+
 async function fetchEmployees() {
+    const loadingElement = document.getElementById('loading');
+    const employeeListElement = document.getElementById('employeeList');
+    
     try {
         const response = await fetch('/api/employees');
         if (!response.ok) {
@@ -6,7 +11,7 @@ async function fetchEmployees() {
         }
 
         const employees = await response.json();
-        const employeeListElement = document.getElementById('employeeList');
+        loadingElement.style.display = 'none'; // Hide the loading text
 
         if (employees.length === 0) {
             employeeListElement.innerHTML = '<li>No employees found.</li>';
@@ -28,7 +33,7 @@ async function fetchEmployees() {
         }
     } catch (error) {
         console.error(error);
-        alert('Could not load employees. Please try again later.');
+        loadingElement.textContent = 'Could not load employees. Please try again later.';
     }
 }
 
@@ -36,6 +41,3 @@ function editEmployee(employeeId) {
     alert('Editing employee with ID: ' + employeeId);
     // Implement redirect or load employee data for editing here
 }
-
-// Load employees when the page loads
-document.addEventListener('DOMContentLoaded', fetchEmployees);
